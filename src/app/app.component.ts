@@ -11,7 +11,7 @@ export class AppComponent {
 
   constructor() {
     initializeApp(firebaseConfig);
-    const root = database().ref();
+    const root = database().ref('testArray');
     root.on('value', function(snap) {
       console.log(snap.val());
     });
