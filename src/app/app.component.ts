@@ -1,19 +1,52 @@
 import { Component } from '@angular/core';
 import { initializeApp, database } from 'firebase';
-import { firebaseConfig } from '../environments/firebase.config';
+import { AngularFireModule } from 'angularfire2/index';
+import {
+  AngularFireDatabaseModule,
+  AngularFireDatabase,
+  FirebaseListObservable,
+  FirebaseObjectObservable
+} from 'angularfire2/database';
+import { AngularFireAuthModule, AngularFireAuth } from 'angularfire2/auth';
+
+import { Observable } from 'rxjs/Rx';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app works!';
+  title = 'Introduction to AngularFire';
 
-  constructor() {
-    initializeApp(firebaseConfig);
-    const root = database().ref('testArray');
-    root.on('value', function(snap) {
-      console.log(snap.val());
-    });
+  courses$: FirebaseListObservable<any>;
+  lesson$: FirebaseObjectObservable<any>;
+
+  firstCourse: any;
+
+  constructor(private angularFire: AngularFireDatabase) {
+    this.courses$ = angularFire.list('courses');
+    this.courses$.subscribe(console.log);
+    this.lesson$ = angularFire.object('lessons/-L5F0m3ngwOoEw3fnNIS');
+    this.lesson$.subscribe(console.log);
+    this.courses$
+      .map(courses => courses[courses.length - 1])
+      .subscribe(course => (this.firstCourse = course));
   }
+
+  listPush() {
+    this.courses$
+      .push({ description: 'test courses' })
+      .then(() => console.log('List Push Done'), console.error);
+  }
+
+  listRemove() {
+    this.courses$.remove(this.firstCourse);
+  }
+
+  listUpdate() {}
+
+  objUpdate() {}
+
+  objSet() {}
 }
