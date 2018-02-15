@@ -9,6 +9,7 @@ import { AngularFireModule } from 'angularfire2/index';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule, AngularFireAuth } from 'angularfire2/auth';
 import { HomeComponent } from './home/home.component';
+import { LessonsService } from './shared/model/lessons.service';
 
 @NgModule({
   declarations: [AppComponent, HomeComponent],
@@ -20,7 +21,7 @@ import { HomeComponent } from './home/home.component';
     AngularFireDatabaseModule,
     AngularFireAuthModule
   ],
-  providers: [],
+  providers: [LessonsService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

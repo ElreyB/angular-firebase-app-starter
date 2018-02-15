@@ -1,4 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { LessonsService } from '../shared/model/lessons.service';
+import { Lesson } from '../shared/model/lesson';
 
 @Component({
   selector: 'app-home',
@@ -7,7 +9,13 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
   encapsulation: ViewEncapsulation.None
 })
 export class HomeComponent implements OnInit {
-  constructor() {}
+  lessons: Lesson[];
+  constructor(private lessonservice: LessonsService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.lessonservice
+      .findAllLessons()
+      .do(console.log)
+      .subscribe(lessons => (this.lessons = lessons));
+  }
 }
