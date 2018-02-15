@@ -27,7 +27,7 @@ export class AppComponent {
   constructor(private angularFire: AngularFireDatabase) {
     this.courses$ = angularFire.list('courses');
     this.courses$.subscribe(console.log);
-    this.lesson$ = angularFire.object('lessons/-L5F0m3ngwOoEw3fnNIS');
+    this.lesson$ = angularFire.object('lessons/--L5F0m3wdqz1uKbd9ZFe');
     this.lesson$.subscribe(console.log);
     this.courses$
       .map(courses => courses[courses.length - 1])
@@ -44,9 +44,21 @@ export class AppComponent {
     this.courses$.remove(this.firstCourse);
   }
 
-  listUpdate() {}
+  listUpdate() {
+    this.courses$.update(this.firstCourse, {
+      description: 'Angular 2 HTTP Modified'
+    });
+  }
 
-  objUpdate() {}
+  objUpdate() {
+    this.lesson$.update({ description: 'New Description' });
+  }
 
-  objSet() {}
+  objSet() {
+    this.lesson$.set({ description: 'New Description' });
+  }
+
+  objRemove() {
+    this.lesson$.remove();
+  }
 }
