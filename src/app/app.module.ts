@@ -11,6 +11,8 @@ import { AngularFireAuthModule, AngularFireAuth } from 'angularfire2/auth';
 import { HomeComponent } from './home/home.component';
 import { LessonsService } from './shared/model/lessons.service';
 import { LessonsListComponent } from './lessons-list/lessons-list.component';
+import { RouterModule } from '@angular/router';
+import { routerConfig } from './router.config';
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, LessonsListComponent],
@@ -20,7 +22,8 @@ import { LessonsListComponent } from './lessons-list/lessons-list.component';
     HttpModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    RouterModule.forRoot(routerConfig)
   ],
   providers: [LessonsService],
   bootstrap: [AppComponent]
