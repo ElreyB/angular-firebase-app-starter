@@ -10,9 +10,10 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule, AngularFireAuth } from 'angularfire2/auth';
 import { HomeComponent } from './home/home.component';
 import { LessonsService } from './shared/model/lessons.service';
+import { LessonsListComponent } from './lessons-list/lessons-list.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent],
+  declarations: [AppComponent, HomeComponent, LessonsListComponent],
   imports: [
     BrowserModule,
     FormsModule,

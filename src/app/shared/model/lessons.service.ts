@@ -14,6 +14,9 @@ export class LessonsService {
   constructor(private angularFire: AngularFireDatabase) {}
 
   findAllLessons(): Observable<Lesson[]> {
-    return this.angularFire.list('lessons');
+    return this.angularFire
+      .list('lessons')
+      .do(console.log)
+      .map(Lesson.fromJsonList);
   }
 }
