@@ -1,0 +1,27 @@
+{
+  "editor.renderWhitespace": "all",
+  "editor.fontSize": 14,
+  "editor.fontLigatures": true,
+  "editor.formatOnSave": true,
+  "eslint.autoFixOnSave": true,
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "files.autoSave": "onFocusChange",
+  "editor.minimap.enabled": true,
+  "editor.rulers": [
+    80,
+    100
+  ],
+  "editor.tabSize": 2,
+  "editor.detectIndentation": false,
+  "editor.renderIndentGuides": true,
+  "editor.wordWrap": "on",
+  "css.validate": false,
+  "window.zoomLevel": 0,
+  "extensions.ignoreRecommendations": true,
+  "workbench.iconTheme": "material-icon-theme",
+  "atomKeymap.promptV3Features": true,
+  "prettier.singleQuote": true,
+  "workbench.startupEditor": "newUntitledFile",
+  "liveServer.settings.donotShowInfoMsg": true
+}
