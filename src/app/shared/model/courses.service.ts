@@ -10,9 +10,13 @@ import { Observable } from 'rxjs/Rx';
 import { Course } from './course';
 @Injectable()
 export class CoursesService {
-  constructor(private angularFire: AngularFireDatabase) {}
+  constructor(private angularFire: AngularFireDatabase) { }
 
   findAllCourses(): Observable<Course[]> {
     return this.angularFire.list('courses').map(Course.fromJsonArray);
+  }
+
+  findLessonsForCourse(courseUrl: string) {
+    console.log(courseUrl);
   }
 }
