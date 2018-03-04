@@ -9,32 +9,53 @@ import {
 import { Observable } from 'rxjs/Rx';
 import { Course } from './course';
 import { Lesson } from './lesson';
-import { FirebaseListFactoryOpts } from 'angularfire2/interfaces'
+import { FirebaseListFactoryOpts } from 'angularfire2/interfaces';
 
 @Injectable()
 export class CoursesService {
-  constructor(private angularFire: AngularFireDatabase) { }
+  constructor(private angularFire: AngularFireDatabase) {}
 
   findAllCourses(): Observable<Course[]> {
     return this.angularFire.list('courses').map(Course.fromJsonArray);
   }
 
   findCourseByUrl(courseUrl: string): Observable<Course> {
-    return this.angularFire.list('courses', {
-      query: {
-        orderByChild: 'url',
-        equalTo: courseUrl
-      }
-    })
+    return this.angularFire
+      .list('courses', {
+        query: {
+          orderByChild: 'url',
+          equalTo: courseUrl
+        }
+      })
       .map(results => results[0]);
   }
 
-  findLessonKeysPerCourseUrl(courseUrl: string,
-    query: FirebaseListFactoryOpts = {}): Observable<string[]> {
+  findLessonKeysPerCourseUrl(
+    courseUrl: string,
+    query: FirebaseListFactoryOpts = {}
+  ): Observable<string[]> {
     return this.findCourseByUrl(courseUrl)
-      .do(val => console.log("course", val))
+      .do(val => console.log('course', val))
       .filter(course => !!course)
-      .switchMap(course => this.angularFire.list(`lessonsPerCourse/${course.$key}`, query))
+      .switchMap(course =>
+        this.angularFire.list(`lessonsPerCourse/${course.$key}`, query)
+      )
       .map(lspc => lspc.map(lpc => lpc.$key));
+  }
+
+  findLessonsForLessonKeys(
+    lessonKeys$: Observable<string[]>
+  ): Observable<Lesson[]> {
+    return lessonKeys$
+      .map(lspc =>
+        lspc.map(lessonKey => this.angularFire.object('lessons/' + lessonKey))
+      )
+      .flatMap(fbojs => Observable.combineLatest(fbojs));
+  }
+
+  findAllLessonsForCourse(courseUrl: string): Observable<Lesson[]> {
+    return this.findLessonsForLessonKeys(
+      this.findLessonKeysPerCourseUrl(courseUrl)
+    );
   }
 }

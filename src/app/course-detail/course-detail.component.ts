@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { CoursesService } from '../shared/model/courses.service';
 import { Lesson } from '../shared/model/lesson';
-import { Observable } from 'rxjs/Rx'
+import { Course } from '../shared/model/course';
+import { Observable } from 'rxjs/Rx';
 import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-course-detail',
@@ -10,16 +11,17 @@ import { ActivatedRoute } from '@angular/router';
   encapsulation: ViewEncapsulation.None
 })
 export class CourseDetailComponent implements OnInit {
-  lessons$: Observable<Lesson[]>
+  course$: Observable<Course>;
+  lessons$: Observable<Lesson[]>;
   constructor(
     private route: ActivatedRoute,
-    private coursesService: CoursesService) {
-
-  }
+    private coursesService: CoursesService
+  ) {}
 
   ngOnInit() {
     const courseUrl = this.route.snapshot.params['id'];
-    this.coursesService.findCourseByUrl(courseUrl);
-  }
 
+    this.course$ = this.coursesService.findCourseByUrl(courseUrl);
+    this.lessons$ = this.coursesService.findAllLessonsForCourse(courseUrl);
+  }
 }
